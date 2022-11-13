@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import Loading from '../Loading'
 import Team from '../Team'
 
 export default function Teams() {
@@ -16,22 +17,22 @@ export default function Teams() {
     const [loading,setLoading ]= useState(true)
     
     useEffect(()=>{
-        fetch('https://dev-api.ultras.io/v1/teams')
-        .then(res=>res.json())
-        .then(res=>{
-            console.log('res', res)
+        let searchId = setTimeout(()=>{
+            fetch(`https://dev-api.ultras.io/v1/teams?name=${inputValue}`)
+            .then(res=>res.json())
+            .then(res=>{
             setState(res)
-        })
-        .finally(res=>{
-            setLoading(false)
-        })
-    },[])
-
-    function handleInput(e){
-        setInputValue(e.target.value)
-    }
+                })
+            .finally(res=>{
+                setLoading(false)
+            })
+        },500)
     
-    
+            return ()=>{
+            clearTimeout(searchId)
+            }
+      },[inputValue])
+  
     let loadId = null;
     function loadMore(e){
         let loadIsValid = e.target.scrollTop > e.target.scrollHeight * 0.7 && state.data.length != state.meta.pagination.total
@@ -58,11 +59,11 @@ export default function Teams() {
     <div className='Teams'>
         <input
             value={inputValue}
-            onChange={e=>{handleInput(e)}}
+            onChange={e=>{setInputValue(e.target.value)}}
             placeholder='search' 
             className='searchTeam' />
         <div onScroll={e=>{loadMore(e)}} className='teamsList'>
-            { loading? "LOADING...": state.data.map(team=><Team key={team.id} {...team} />) }
+            { loading? <Loading />: state.data.map(team=><Team key={team.id} {...team} />) }
         </div>
     </div>
   )
