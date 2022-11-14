@@ -1,10 +1,9 @@
 import React, { memo } from 'react'
 
- function Team({name,logo}) {
-    console.log("team componenty render exav");
+ function Team({name,logo,flag}) {
   return (
     <div className='Team'>
-        <img className='teamLogo' alt={name} src={logo} />
+        <img className='teamLogo' alt={name} src={logo || flag} />
         <h4 className='teamName'>{name}</h4>
     </div>
   )

@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom'
 import Loading from '../Loading'
 import Team from '../Team'
 
-export default function Teams() {
+export default function Countries() {
     const [state,setState] = useState({ 
         data:[],
         meta:{
