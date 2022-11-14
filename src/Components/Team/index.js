@@ -1,8 +1,8 @@
 import React, { memo } from 'react'
 
- function Team({name,logo,flag}) {
+ function Team({name,id,logo,flag,setcurrentTeamId}) {
   return (
-    <div className='Team'>
+    <div onClick={()=>{setcurrentTeamId(id)}} className='Team'>
         <img className='teamLogo' alt={name} src={logo || flag} />
         <h4 className='teamName'>{name}</h4>
     </div>

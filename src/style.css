@@ -8,6 +8,10 @@ body{
 .App{
     height: 100vh;
     background-color: blue;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
 }
 .Header{
     display: flex;
@@ -17,6 +21,7 @@ body{
 }
 .Teams{
   border-radius: 20px ;
+  background-color: antiquewhite;
   overflow: hidden;
   width:250px ;
   display: flex;
@@ -42,7 +47,7 @@ body{
   align-items: center;
 }
 .teamLogo{
-  width: 50px;
+  max-height: 90%;
 }
 .searchTeam{
   width: 100%;
@@ -95,4 +100,76 @@ body{
   .navButton {
     padding: 16px 48px;
   }
+}
+
+.Comp{
+  display: flex;
+  gap: 30px;
+}
+
+.Result{
+  padding: 5px;
+  background-color: aqua;
+  display: flex;
+  justify-content: start;
+  align-items: start;
+  flex-wrap: wrap;
+  gap: 5px;
+  height: 500px;
+  width: 1050px;
+  overflow-y: scroll;
+}
+
+.Match{
+  background-color: grey;
+  width: 250px;
+  height: 120px;
+  border-radius: 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+
+}
+.leagueInfo{
+  display: flex;
+  gap: 5px;
+}
+.teams{
+  display: flex;
+  max-height:60% ;
+  width: 95%;
+  justify-content: center;
+  gap: 5px;
+}
+.matchTeamLogos{
+  max-height: 60px;
+  display: flex;
+  gap:5px
+}
+.matchTeamLogo{
+  max-height: 80%;
+  background-color: rgb(198, 168, 168);
+  border-radius: 5px;
+  
+}
+.addInfo{
+  width: 40%;
+  display: flex;
+  align-items: center;
+  border-top: 0.5px solid white;
+  border-bottom: 0.5px solid white;
+
+}
+.leagueLogo{
+  width: 30px;
+  height: auto;
+  background-color: rgb(198, 168, 168);
+  border-radius: 5px;
+
+}
+.result{
+  width: 90%;
+  font-weight: bold;
 }

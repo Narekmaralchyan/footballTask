@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { memo, useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import Loading from '../Loading'
 import Team from '../Team'
 
-export default function Teams() {
+function ClubsSearch({setcurrentTeamId}) {
+    const { pathname} = useLocation()
     const [state,setState] = useState({ 
         data:[],
         meta:{
@@ -14,15 +15,11 @@ export default function Teams() {
             }
         }
     })
-    const [inputValue,setInputValue] = useState('')
     const [loading,setLoading ]= useState(true)
     
-    const { pathname } = useLocation()
-
     useEffect(()=>{
-        let searchId = setTimeout(()=>{
-            console.log("fetch");
-            fetch(`https://dev-api.ultras.io/v1${pathname}?name=${inputValue}`)
+            setLoading(true)
+            fetch(`https://dev-api.ultras.io/v1${pathname}`)
             .then(res=>res.json())
             .then(res=>{
             setState(res)
@@ -30,15 +27,23 @@ export default function Teams() {
             .finally(res=>{
                 setLoading(false)
             })
+      },[pathname])
+      
+    let searchId = null;
+    function searcHandle(e){
+       
+            if(searchId) clearTimeout(searchId);
+            searchId = setTimeout(()=>{
+            fetch(`https://dev-api.ultras.io/v1${pathname}?name=${e.target.value}`)
+            .then(res=>res.json())
+            .then(res=>{
+            setState(res)
+                })
         },500)
-    
-            return ()=>{
-            clearTimeout(searchId)
-            }
-      },[inputValue])
-  
-    let loadId = null;
+        
+    }
 
+    let loadId = null;
     function loadMore(e){
         let loadIsValid = e.target.scrollTop > e.target.scrollHeight * 0.7 && state.data.length != state.meta.pagination.total
         let {offset,limit} = state.meta.pagination;
@@ -63,13 +68,14 @@ export default function Teams() {
   return (
     <div className='Teams'>
         <input
-            value={inputValue}
-            onChange={e=>{setInputValue(e.target.value)}}
-            placeholder='search' 
+            onChange={e=>{searcHandle(e)}}
+            placeholder='search'
             className='searchTeam' />
         <div onScroll={e=>{loadMore(e)}} className='teamsList'>
-            { loading? <Loading />: state.data.map(team=><Team key={team.id} {...team} />) }
+            { loading? <Loading />: state.data.map(team=><Team setcurrentTeamId={setcurrentTeamId} key={team.id} {...team} />) }
         </div>
     </div>
   )
 }
+
+export default memo(ClubsSearch)
