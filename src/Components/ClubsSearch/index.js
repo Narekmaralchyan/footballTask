@@ -16,7 +16,6 @@ function ClubsSearch({setcurrentTeamId}) {
         }
     })
     const [loading,setLoading ]= useState(true)
-    
     useEffect(()=>{
             setLoading(true)
             fetch(`https://dev-api.ultras.io/v1${pathname}`)
