@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom'
-import ClubsSearch from '../ClubsSearch'
 import Result from '../ResultMatches'
+import Searching from '../Searching'
 
 export default function Clubs() {
     const [currentTeamId, setcurrentTeamId]= useState("")
 
    return (
-    <div className='Comp'>
-        <ClubsSearch setcurrentTeamId={setcurrentTeamId} />
-         <Result currentTeamId={currentTeamId}/>
+    <div className='Clubs Comp'>
+        <Searching setcurrentTeamId={setcurrentTeamId} searchType='club' />
+        <Result currentTeamId={currentTeamId}/>
     </div>
     )
 }

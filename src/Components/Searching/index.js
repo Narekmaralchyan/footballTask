@@ -1,10 +1,9 @@
 import React, { memo, useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom'
 import Loading from '../Loading'
 import Team from '../Team'
 
-function ClubsSearch({setcurrentTeamId}) {
-    const { pathname} = useLocation()
+function Searching({setcurrentTeamId,searchType}) {
+    
     const [state,setState] = useState({ 
         data:[],
         meta:{
@@ -18,21 +17,21 @@ function ClubsSearch({setcurrentTeamId}) {
     const [loading,setLoading ]= useState(true)
     useEffect(()=>{
             setLoading(true)
-            fetch(`https://dev-api.ultras.io/v1${pathname}?type=club`)
+            fetch(`https://dev-api.ultras.io/v1/teams?type=${searchType}`)
             .then(res=>res.json())
             .then(res=>{
-            setState(res)
+                setState(res)
                 })
             .finally(res=>{
                 setLoading(false)
             })
-      },[pathname])
+      },[])
       
     let searchId = null;
     function searcHandle(e){
             if(searchId) clearTimeout(searchId);
             searchId = setTimeout(()=>{
-            fetch(`https://dev-api.ultras.io/v1${pathname}?type=club&name=${e.target.value}`)
+            fetch(`https://dev-api.ultras.io/v1/teams?type=${searchType}&name=${e.target.value}`)
             .then(res=>res.json())
             .then(res=>{
             setState(res)
@@ -48,7 +47,7 @@ function ClubsSearch({setcurrentTeamId}) {
 
         if (loadIsValid && !loadId){
             loadId = setTimeout(()=>{
-                fetch(`https://dev-api.ultras.io/v1${pathname}?type=club&offset=${offset+limit}`)
+                fetch(`https://dev-api.ultras.io/v1/teams?type=${searchType}&offset=${offset+limit}`)
                 .then(res=>res.json())
                 .then(res=>{
                     setState((prevState)=>{
@@ -76,4 +75,4 @@ function ClubsSearch({setcurrentTeamId}) {
   )
 }
 
-export default memo(ClubsSearch)
+export default memo(Searching)

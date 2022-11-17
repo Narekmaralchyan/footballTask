@@ -1,9 +1,7 @@
 import React, { useEffect,useState } from 'react'
-import { useLocation } from 'react-router-dom';
 import Match from '../Match';
 
 export default function Result({currentTeamId}) {
-    const [currentTeamMatches,setcurrentTeamMatches] = useState({})
     const [matches,setMatches] = useState({ 
         data:[],
         meta:{
@@ -14,9 +12,9 @@ export default function Result({currentTeamId}) {
             }
         }
     })
-
+    
     useEffect(()=>{
-        fetch(`https://dev-api.ultras.io/v1/matches?teamId=${currentTeamId}`)
+        fetch(`https://dev-api.ultras.io/v1/matches?&teamId=${currentTeamId}`)
         .then(res=>res.json())
         .then(res=>{
             setMatches(res)
