@@ -20,7 +20,6 @@ export default function Result({currentTeamId}) {
         .then(res=>res.json())
         .then(res=>{
             setMatches(res)
-            console.log('res', res)
         })
     },[currentTeamId])
 
@@ -29,12 +28,10 @@ export default function Result({currentTeamId}) {
         let loadIsValid = e.target.scrollTop > e.target.scrollHeight * 0.6 && matches.data.length != matches.meta.pagination.total
         let {offset,limit} = matches.meta.pagination;
         if (loadIsValid && !loadId){
-            console.log("ifi mejem");
             loadId = setTimeout(()=>{
                 fetch(`https://dev-api.ultras.io/v1/matches?teamId=${currentTeamId}&offset=${offset+limit}`)
                 .then(res=>res.json())
                 .then(res=>{
-                    console.log('res-----load more', res)
                     setMatches((prevState)=>{
                         return {
                             meta:res.meta,
