@@ -16,10 +16,9 @@ function ClubsSearch({setcurrentTeamId}) {
         }
     })
     const [loading,setLoading ]= useState(true)
-    
     useEffect(()=>{
             setLoading(true)
-            fetch(`https://dev-api.ultras.io/v1${pathname}`)
+            fetch(`https://dev-api.ultras.io/v1${pathname}?type=club`)
             .then(res=>res.json())
             .then(res=>{
             setState(res)
@@ -31,10 +30,9 @@ function ClubsSearch({setcurrentTeamId}) {
       
     let searchId = null;
     function searcHandle(e){
-       
             if(searchId) clearTimeout(searchId);
             searchId = setTimeout(()=>{
-            fetch(`https://dev-api.ultras.io/v1${pathname}?name=${e.target.value}`)
+            fetch(`https://dev-api.ultras.io/v1${pathname}?type=club&name=${e.target.value}`)
             .then(res=>res.json())
             .then(res=>{
             setState(res)
@@ -50,7 +48,7 @@ function ClubsSearch({setcurrentTeamId}) {
 
         if (loadIsValid && !loadId){
             loadId = setTimeout(()=>{
-                fetch(`https://dev-api.ultras.io/v1${pathname}?offset=${offset+limit}`)
+                fetch(`https://dev-api.ultras.io/v1${pathname}?type=club&offset=${offset+limit}`)
                 .then(res=>res.json())
                 .then(res=>{
                     setState((prevState)=>{
